@@ -1,32 +1,25 @@
-// Header.js
+// src/components/Header.js
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-
 function Header({ user }) {
   return (
-    <header style={{ backgroundColor: 'black', color: 'white', padding: '10px' }}>
+    <header>
+      <h1>Inventory Management System</h1>
       <nav>
-        {!user ? (
+        <Link to="/">Home</Link> {/* Home link */}
+        {user ? (
           <>
-            <Link to="/register">
-              <button>Register</button>
-            </Link>
-            <Link to="/login">
-              <button>Login</button>
-            </Link>
+            <Link to="/itemEntry">Item Entry</Link>
+            <Link to="/maintenanceEntry">Maintenance Entry</Link>
+            <Link to="/viewUser">View User</Link> {/* Corrected link */}
+            <Link to="/logout">Logout</Link>
           </>
         ) : (
           <>
-            <Link to="/itemEntry">
-              <button>Item Entry</button>
-            </Link>
-            <Link to="/maintenanceEntry">
-              <button>Maintenance Entry</button>
-            </Link>
-            <Link to="/viewData">
-              <button>View Data</button>
-            </Link>
+            {/* <Link to="/viewuser"></Link> */}
+            <Link to="/login">Login</Link>
+            <Link to="/register">Register</Link>
           </>
         )}
       </nav>

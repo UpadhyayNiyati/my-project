@@ -1,7 +1,9 @@
 // Login.js
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 function Login({ onLoginSuccess }) {
+  const navigate = useNavigate(); // Initialize useNavigate
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
 
@@ -32,7 +34,7 @@ function Login({ onLoginSuccess }) {
     }
   };
 
-  const handleViewUser  = async () => {
+  const handleViewUser   = async () => {
     setError('');
 
     try {
@@ -53,30 +55,35 @@ function Login({ onLoginSuccess }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Login</h2>
-      {error && <div style={{ color: 'red' }}>{error}</div>}
-      <input
-        type="email"
-        name="email"
-        placeholder="Enter Email"
-        value={formData.email}
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="Enter Password"
-        value={formData.password}
-        onChange={handleChange}
-        required
-      />
-      <button type="submit">Login</button>
-      <button type="button" onClick={handleViewUser }>
-        View User
-      </button>
-    </form>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <h2>Login</h2>
+        {error && <div style={{ color: 'red' }}>{error}</div>}
+        <input
+          type="email"
+          name="email"
+          placeholder="Enter Email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Enter Password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+        <button type="submit">Login</button>
+        <button type="button" onClick={handleViewUser }>
+          View User
+        </button>
+      </form>
+      <div style={{ marginTop: '20px' }}>
+        <p>New User? <button onClick={() => navigate('/register')}>Register</button></p>
+      </div>
+    </div>
   );
 }
 

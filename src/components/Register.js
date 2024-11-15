@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function Register({ onRegister, onLogin }) {
+function Register({ onRegister }) {
+  const navigate = useNavigate(); // Use useNavigate instead of useHistory
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
   const [error, setError] = useState('');
-  const [userData, setUserData] = useState(null); // Corrected typo in state variable name
+  const [userData, setUserData] = useState(null); // Fixed typo in state variable name
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -12,9 +14,7 @@ function Register({ onRegister, onLogin }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(''); // Reset error message
-
-    console.log('formData:', formData); // Logging form data correctly
+    setError('');
 
     try {
       const response = await fetch('http://localhost:5000/api/register', {
@@ -28,7 +28,6 @@ function Register({ onRegister, onLogin }) {
         alert(result.message);
         onRegister(); // Call the onRegister function to redirect or update state
       } else {
-        console.error('Error response:', result);
         setError(result.message || 'Registration failed. Please try again.');
       }
     } catch (error) {
@@ -37,8 +36,8 @@ function Register({ onRegister, onLogin }) {
     }
   };
 
-  const handleViewUser = async () => { // Fetch user data by email
-    setError(''); // Reset error message
+  const handleViewUser = async () => {
+    setError('');
 
     try {
       const response = await fetch(`http://localhost:5000/api/user/${formData.email}`, {
@@ -89,7 +88,7 @@ function Register({ onRegister, onLogin }) {
           required
         />
         <button type="submit">Register</button>
-        <button type="button" onClick={onLogin}>
+        <button type="button" onClick={() => navigate('/login')}>
           Already have an account? Login
         </button>
       </form>
